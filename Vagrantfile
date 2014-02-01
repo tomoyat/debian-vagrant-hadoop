@@ -89,6 +89,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.data_bags_path = "./data_bags"
 
     chef.add_recipe "base"
+    chef.add_recipe "iptables"
+    chef.add_recipe "user-setting"
+    chef.add_recipe "sudo"
   end
 
   # Enable provisioning with chef server, specifying the chef server URL,

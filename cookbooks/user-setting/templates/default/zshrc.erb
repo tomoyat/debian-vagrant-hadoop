@@ -1,0 +1,50 @@
+# 環境変数
+export LANG=ja_JP.UTF-8
+ 
+# emacs key bind
+bindkey -e
+ 
+#ヒストリー
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt bang_hist # !を使ったヒストリ展開を行う(d)
+setopt extended_history # ヒストリに実行時間も保存する
+setopt hist_ignore_dups # 直前と同じコマンドはヒストリに追加しない
+setopt share_history # 他のシェルのヒストリをリアルタイムで共有する
+setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存する
+ 
+#補完システム
+autoload -U compinit
+compinit
+setopt extended_glob
+### Prompt ###
+# プロンプトに色を付ける
+autoload -U colors
+colors
+
+# 色の定義
+DEFAULT=$"%{\e[0;0m%}"
+RESET="%{${reset_color}%}"
+GREEN="%{${fg[green]}%}"
+BLUE="%{${fg[blue]}%}"
+RED="%{${fg[red]}%}"
+CYAN="%{${fg[cyan]}%}"
+YELLOW="%{${fg[yellow]}%}"
+MAGENTA="%{${fg[magenta]}%}"
+WHITE="%{${fg[white]}%}"
+ 
+# 補完で小文字でも大文字にマッチさせる
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+ 
+
+export PATH=$PATH:$HOME/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/lib
+export EDITOR=vim # エディタをvimに設定
+export PAGER="less"
+export GIT_PAGER="less"
+
+case $HOST in
+    *)
+        PROMPT=$'\n'"${CYAN}%D %T${RESET} [%~]"$'\n'" %U%n@{${BLUE}%M${RESET}}%u %# "
+        ;;
+esac
