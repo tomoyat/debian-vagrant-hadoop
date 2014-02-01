@@ -92,6 +92,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "iptables"
     chef.add_recipe "user-setting"
     chef.add_recipe "sudo"
+    chef.add_recipe "java-setup"
   end
 
   # Enable provisioning with chef server, specifying the chef server URL,
