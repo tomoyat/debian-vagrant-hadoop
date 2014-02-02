@@ -92,7 +92,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "iptables"
     chef.add_recipe "user-setting"
     chef.add_recipe "sudo"
-    chef.add_recipe "java-setup"
+#    chef.add_recipe "java-setup"
+    chef.add_recipe "cloudera"
   end
 
   # Enable provisioning with chef server, specifying the chef server URL,
