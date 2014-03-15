@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "hadoop"
+  config.vm.box = "ansible-hadoop"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -23,10 +23,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network :private_network, ip: "192.168.33.11"
+  config.vm.network :private_network, ip: "192.168.33.12"
   # vagrant-hostsupdater
   #  https://github.com/cogitatio/vagrant-hostsupdater
-  config.vm.hostname = "hadoop-test"
+  config.vm.hostname = "ansible-hadoop"
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
@@ -87,13 +87,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "./cookbooks"
     chef.data_bags_path = "./data_bags"
-
+    chef.json = {
+      "sshd" => {
+        "ssh_port" => 22,
+        "password_auth"=> "no",
+        "permit_root" => "no"
+      }
+    }
     chef.add_recipe "base"
     chef.add_recipe "iptables"
     chef.add_recipe "user-setting"
     chef.add_recipe "sudo"
-#    chef.add_recipe "java-setup"
-    chef.add_recipe "cloudera"
+    chef.add_recipe "sshd"
   end
 
   # Enable provisioning with chef server, specifying the chef server URL,

@@ -30,11 +30,20 @@ data_ids.each do |id|
   end
 end
 
+# authorized_key
 data_ids.each do |id|
   u = data_bag_item("users", id)
   directory "#{u['home']}/.ssh" do
     owner u["user_name"]
     group u["group_name"]
+  end
+  authorized_keys_file = "#{u['home']}/.ssh/authorized_keys"
+  file authorized_keys_file do
+    owner u["user_name"]
+    group u["group_name"]
+    mode 00600
+    content "#{u['ssh_key']}"
+    not_if { ::File.exists?("#{authorized_keys_file}") }
   end
 end
 

@@ -1,0 +1,7 @@
+Port <%= node['sshd']['ssh_port'] %>
+Protocol 2
+PasswordAuthentication <%= node['sshd']['password_auth'] %>
+PermitRootLogin <%= node['sshd']['permit_root'] %>
+UseDNS no
+UsePAM no
+Subsystem sftp /usr/lib/sftp-server
